@@ -1,61 +1,36 @@
 # Démineur avec un agent basé sur la connaissance
 
-Ce projet propose une version graphique du Démineur et un agent qui déduit les cases sûres et les mines à partir des informations révélées sur le plateau. L'agent s'appuie sur une base de connaissances et des règles d'inférence logique.
+Jeu de Démineur sur une grille de 8 × 8, où le joueur peut révéler les cases ou demander à un agent de jouer. L'agent utilise une base de connaissances et des règles d'inférence logique pour identifier les cases sûres et les mines.
 
 ## Interface du runner
 
-![Interface graphique du Démineur avec les boutons AI Move et Reset](assets/images/runner-interface.png)
+![Interface du Démineur avec les boutons AI Move et Reset](assets/images/runner-interface.png)
 
 ## Fonctionnalités
 
 - Plateau de **8 × 8 cases** contenant **8 mines**.
-- Révélation manuelle des cases ou demande d'un coup à l'IA.
-- Signalement manuel des mines avec des drapeaux.
-- Inférence des cases sûres et des mines à partir des nombres révélés.
-- Réinitialisation de la partie.
+- Révélation manuelle des cases et signalement des mines avec des drapeaux.
+- Coups proposés par l'agent à partir des informations révélées.
+- Détection de victoire ou de défaite.
+- Possibilité de recommencer une partie avec un nouveau plateau.
 
-## Comment fonctionne l'IA ?
+## Comment jouer
 
-Chaque nombre révélé permet de créer une phrase logique de la forme « parmi ces cases voisines, `n` sont des mines ». L'agent conserve ces phrases dans sa base de connaissances, marque les mines et les cases sûres lorsqu'elles peuvent être déduites, puis compare les phrases entre elles pour en tirer de nouvelles conclusions.
-
-Lorsqu'on demande un coup à l'IA, elle choisit d'abord une case qu'elle sait sûre. Si aucune case sûre n'est connue, elle choisit au hasard une case qui n'a pas encore été jouée et qui n'est pas identifiée comme une mine. Ce choix aléatoire peut tomber sur une mine : l'agent ne garantit donc pas une partie gagnante.
-
-## Installation
-
-Depuis le dossier du projet :
-
-```bash
-python -m pip install -r requirements.txt
-```
-
-La dépendance graphique utilisée est Pygame.
-
-## Lancer le jeu
-
-Depuis le dossier du projet, où se trouvent également les dossiers `assets/` :
-
-```bash
-python runner.py
-```
-
-## Commandes
-
-- **Clic gauche sur une case** : la révéler.
-- **Clic droit sur une case non révélée** : ajouter ou retirer un drapeau.
-- **AI Move** : demander à l'agent de jouer un coup.
-- **Reset** : démarrer une nouvelle partie avec un plateau et une position des mines aléatoires.
+1. Lancez le jeu et cliquez sur **Play Game**.
+2. Cliquez sur une case pour la révéler.
+3. Faites un clic droit sur une case non révélée pour ajouter ou retirer un drapeau.
+4. Cliquez sur **AI Move** pour demander à l'agent de jouer.
+5. Cliquez sur **Reset** pour commencer une nouvelle partie.
 
 La partie est gagnée lorsque les drapeaux placés correspondent exactement à toutes les mines. Révéler une mine met fin à la partie et affiche les mines du plateau.
 
-## Structure du projet
+## Algorithme de l'IA
 
-- `minesweeper.py` : logique du jeu, phrases logiques et agent de résolution.
-- `runner.py` : interface graphique Pygame et interactions.
-- `assets/fonts/` : police utilisée par l'interface.
-- `assets/images/` : icônes de mine et de drapeau.
-- `requirements.txt` : dépendances Python.
+Chaque nombre révélé indique combien de mines se trouvent parmi les cases voisines. L'agent transforme cette information en phrase logique, puis la conserve dans sa base de connaissances. Il marque les cases sûres et les mines lorsqu'il peut les déduire, et compare ses phrases pour obtenir de nouvelles conclusions.
 
-## Dépôt
+Lorsqu'on lui demande un coup, l'agent choisit d'abord une case qu'il sait sûre. S'il n'en connaît aucune, il sélectionne au hasard une case non jouée qu'il ne sait pas être une mine. Ce choix peut être une mine : l'agent ne garantit donc pas une victoire.
+
+## Installation et lancement
 
 ```bash
 git clone https://github.com/cestbryan-ng/KBA-Minesweeper.git
